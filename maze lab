@@ -1,0 +1,36 @@
+def solve_maze(maze, x, y):
+    row, col = len(maze), len(maze[0])
+
+    if x == row - 1 and y == col - 1:  #exit
+        return True
+
+    if x < 0 or y < 0 or x >= row or y >= col or maze[x][y] != 0:
+        return False  #no path or already visited
+
+    maze[x][y] = 3  #3 = current path
+
+    # Right -> Down -> Left -> Up
+    if (solve_maze(maze, x, y + 1) or  #Right
+        solve_maze(maze, x + 1, y) or  #Down
+        solve_maze(maze, x, y - 1) or  #Left
+        solve_maze(maze, x - 1, y)):   #Up
+        return True
+
+    maze[x][y] = 2  #dead end, 2 = blocked
+    return False
+
+def print_maze(maze):
+    for row in maze:
+        print(" ".join(str(cell) for cell in row))
+
+#testing
+maze = [
+    [0, 1, 0, 0, 0],
+    [0, 1, 0, 1, 0],
+    [0, 0, 0, 1, 0],
+    [0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0]
+]
+
+solve_maze(maze, 0, 0)
+print_maze(maze)
