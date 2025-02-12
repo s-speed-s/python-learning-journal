@@ -9,11 +9,11 @@ def solve_maze(maze, x, y):
 
     maze[x][y] = 3  #3 = current path
 
-    # Right -> Down -> Left -> Up
-    if (solve_maze(maze, x, y + 1) or  #Right
-        solve_maze(maze, x + 1, y) or  #Down
-        solve_maze(maze, x, y - 1) or  #Left
-        solve_maze(maze, x - 1, y)):   #Up
+    #direction prio: right -> down -> left -> up
+    if (solve_maze(maze, x, y + 1) or  #right
+        solve_maze(maze, x + 1, y) or  #down
+        solve_maze(maze, x, y - 1) or  #left
+        solve_maze(maze, x - 1, y)):   #up
         return True
 
     maze[x][y] = 2  #dead end, 2 = blocked
