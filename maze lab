@@ -1,7 +1,7 @@
 def solve_maze(maze, x, y):
     row, col = len(maze), len(maze[0])
 
-    if x == row - 1 and y == col - 1:  #exit
+    if (x == row - 1 and y == col - 1)  and maze[x][y] == 0:  #exit
         return True
 
     if x < 0 or y < 0 or x >= row or y >= col or maze[x][y] != 0:
@@ -29,8 +29,13 @@ maze = [
     [0, 1, 0, 1, 0],
     [0, 0, 0, 1, 0],
     [0, 1, 0, 1, 0],
-    [0, 1, 0, 1, 0]
+    [0, 1, 0, 1, 1]
 ]
 
-solve_maze(maze, 0, 0)
+
+if solve_maze(maze, 0, 0):
+    print("maze solved")
+else:
+    print("maze not solved")
+    
 print_maze(maze)
