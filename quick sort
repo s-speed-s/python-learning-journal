@@ -1,0 +1,64 @@
+import time
+import matplotlib.pyplot as plt
+
+# raise recursion limit
+
+import sys
+sys.setrecursionlimit(10000)
+
+# sorting
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[len(arr) - 1]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+
+    return quick_sort(left) + middle + quick_sort(right)
+
+# generate worst cases
+
+def generate_sorted_array(size):
+    return list(range(size))
+
+def generate_reverse_sorted_array(size):
+    return list(range(size, 0, -1))
+
+def measure_time(array):
+    start_time = time.time()
+    quick_sort(array)
+    return time.time() - start_time
+
+array_sizes = [10, 100, 1000, 10000]
+times_sorted = []
+times_reverse_sorted = []
+times_same_element = []
+
+# data
+
+for size in array_sizes:
+    sorted_array = generate_sorted_array(size)
+    reverse_sorted_array = generate_reverse_sorted_array(size)
+
+    time_sorted = measure_time(sorted_array)
+    time_reverse_sorted = measure_time(reverse_sorted_array)
+
+    times_sorted.append(time_sorted)
+    times_reverse_sorted.append(time_reverse_sorted)
+
+    print(f"Size: {size} - Sorted: {time_sorted:.5f}s, Reverse: {time_reverse_sorted:.5f}s")
+
+# Plot Results
+plt.figure(figsize=(12, 6))
+plt.plot(array_sizes, times_sorted, label="Sorted Array (Worst Case)")
+plt.plot(array_sizes, times_reverse_sorted, label="Reverse Sorted Array (Worst Case)")
+
+plt.xlabel('Array Size')
+plt.ylabel('Time (seconds)')
+plt.title('Quick Sort Time Complexity - Worst Cases')
+plt.legend()
+plt.grid(True)
+plt.show()
